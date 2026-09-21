@@ -11,22 +11,33 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
-
     <script src="js/script.js" defer></script>
+    
 </head>
 
 <body>
     <header class="siteHeader">
-        <a href="index.html" class="logoLink">
-            jamie kramer
-        </a>
+    <a href="index.html" class="logoLink">
+        jamie kramer
+    </a>
 
-        <nav class="nav">
-            <a href="html/projects.html">Projects</a>
-            <a href="html/about.html">About Me</a>
-        </nav>
+    <button
+        class="menuToggle"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mainNavigation"
+    >
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
 
-    </header>
+    <nav class="nav" id="mainNavigation">
+        <a href="html/projects.html">Projects</a>
+        <a href="html/about.html">About Me</a>
+    </nav>
+</header>
 
     <main>
         <section class="hero">
@@ -117,7 +128,7 @@
                     <span class="view-my-work">more work</span>
                     <img src="img/Arrow 1.svg" class="button-view-my-work-item" alt="">
                 </a>
-                
+
 
             </div>
 
