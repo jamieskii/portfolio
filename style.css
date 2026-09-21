@@ -77,6 +77,28 @@ p {
     font-family: Montserrat;
 
 }
+.menuToggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    padding: 8px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.menuToggle span {
+    display: block;
+    width: 28px;
+    height: 3px;
+    margin: 5px auto;
+    border-radius: 10px;
+    background-color: var(--black);
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+}
+
 
 /*clickable images*/
 .clickable-image {
@@ -1178,5 +1200,621 @@ h2 {
     .timelineTekst p {
         font-size: 16px;
         line-height: 1.45;
+    }
+
+    .siteHeader {
+        position: relative;
+        min-height: 72px;
+        padding: 14px 24px;
+
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .logoLink {
+        position: relative;
+        z-index: 22;
+    }
+
+    .menuToggle {
+        position: relative;
+        z-index: 22;
+
+        display: block;
+        flex-shrink: 0;
+    }
+
+    .nav {
+        position: absolute;
+        z-index: 21;
+        top: 100%;
+        right: 0;
+        left: 0;
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+
+        padding: 12px 24px 24px;
+        background-color: var(--blue);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.18);
+
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-12px);
+
+        transition:
+            opacity 0.25s ease,
+            visibility 0.25s ease,
+            transform 0.25s ease;
+    }
+
+    .nav a {
+        width: 100%;
+        padding: 16px 0;
+        border-bottom: 2px solid rgba(5, 5, 5, 0.15);
+
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .nav a:last-child {
+        border-bottom: 0;
+    }
+
+    /* Geopend menu */
+    .nav.is-open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    /* Eerste streep draait naar beneden */
+    .menuToggle[aria-expanded="true"] span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    /* Middelste streep verdwijnt */
+    .menuToggle[aria-expanded="true"] span:nth-child(2) {
+        opacity: 0;
+    }
+
+    /* Onderste streep draait naar boven */
+    .menuToggle[aria-expanded="true"] span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+}
+
+/* =====================================================
+   RESPONSIVE PORTFOLIO
+   Tablet: maximaal 1100px
+   Mobiel: maximaal 800px
+   Klein mobiel: maximaal 480px
+===================================================== */
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1100px) {
+
+    /* Algemene pagina-opbouw */
+    .pagina {
+        width: auto;
+        max-width: none;
+        margin: 0 40px;
+        padding: 35px 0 80px;
+    }
+
+    h4,
+    .titelStijl {
+        font-size: 52px;
+    }
+
+    h5 {
+        width: auto;
+        height: auto;
+        margin: 70px 0 28px;
+        font-size: 42px;
+        line-height: 1.1;
+    }
+
+    /* Projecttitel */
+    .klemTitel {
+        max-width: 900px;
+        margin-bottom: 50px;
+        font-size: 52px;
+    }
+
+    /* Introducties van projectpagina's */
+    .klemIntro,
+    .blendsIntro {
+        grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+        gap: 50px;
+    }
+
+    .klemIntroTekst {
+        max-width: none;
+    }
+
+    .klemIntroAfbeelding img {
+        height: 580px;
+    }
+
+    .breakingpointIntroAfbeelding {
+        width: 100%;
+        height: auto;
+        max-height: 600px;
+        object-fit: contain;
+    }
+
+    .insIntroAfbeelding {
+        width: 100%;
+        height: auto;
+    }
+
+    .insIntroAfbeelding img {
+        width: 100%;
+        height: auto;
+        border-radius: 32px;
+    }
+
+    .blendsIntroAfbeelding {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Projectsecties */
+    .klemSectie {
+        margin-top: 80px;
+    }
+
+    .klemSectieTitel {
+        font-size: 42px;
+    }
+
+    .klemGroteAfbeelding,
+    .videoContainer,
+    .carriereFoto,
+    .ins3 {
+        border-radius: 32px;
+    }
+
+    .breakingpointGame {
+        align-items: flex-start;
+    }
+
+    .breakingpointGame img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .ins3 {
+        width: 100%;
+    }
+
+    /* Carrière Kameleon / museum-grid */
+    .carriereGrid {
+        grid-template-columns: 40% minmax(0, 1fr);
+        gap: 24px;
+    }
+
+    .carriereKolomLinks {
+        gap: 40px;
+    }
+
+    .carriereKolomRechts {
+        gap: 30px;
+    }
+
+    /* Slideshow */
+    .slideshowContainer {
+        width: 100%;
+        max-width: 900px;
+    }
+
+    /* Knoppen onder projectpagina's */
+    .buttonMoreWork {
+        width: 100%;
+        max-width: none;
+        margin: 60px 0 0;
+    }
+
+    .buttonMoreWork .button-view-my-work {
+        position: static;
+    }
+}
+
+
+/* =========================
+   MOBIEL
+========================= */
+
+@media (max-width: 800px) {
+
+    /* Header */
+    .siteHeader {
+        min-height: auto;
+        padding: 18px 24px;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .logoLink {
+        font-size: 24px;
+    }
+
+    .nav {
+        gap: 18px;
+        font-size: 16px;
+    }
+
+    /* Algemene tekst */
+    p {
+        font-size: 16px;
+        line-height: 1.55;
+    }
+
+    h4,
+    .titelStijl {
+        margin-bottom: 40px;
+        font-size: 42px;
+        line-height: 1.05;
+    }
+
+    h5 {
+        width: auto;
+        height: auto;
+        margin: 60px 0 24px;
+        font-size: 34px;
+        line-height: 1.1;
+    }
+
+    /* Algemene projectpagina */
+    .pagina {
+        width: auto;
+        max-width: none;
+        margin: 0 24px;
+        padding: 28px 0 60px;
+    }
+
+    .back {
+        gap: 12px;
+        margin-bottom: 24px;
+        font-size: 16px;
+    }
+
+    .backIcon {
+        width: 32px;
+    }
+
+    .klemTitel {
+        max-width: none;
+        margin-bottom: 40px;
+        font-size: clamp(36px, 10vw, 48px);
+        line-height: 1.05;
+        overflow-wrap: anywhere;
+    }
+
+    /* Introducties onder elkaar */
+    .klemIntro,
+    .blendsIntro {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .klemIntroTekst {
+        width: 100%;
+        max-width: none;
+    }
+
+    .klemIntroTekst p {
+        margin-bottom: 24px;
+        font-size: 16px;
+        line-height: 1.55;
+    }
+
+    .klemVraag {
+        max-width: none;
+        font-size: 18px !important;
+        font-weight: 600 !important;
+    }
+
+    .klemLijn {
+        margin: 0 0 28px;
+    }
+
+    /* Intro-afbeeldingen */
+    .klemIntroAfbeelding,
+    .insIntroAfbeelding {
+        width: 100%;
+        height: auto;
+    }
+
+    .klemIntroAfbeelding img,
+    .insIntroAfbeelding img {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        object-fit: contain;
+        border-radius: 24px;
+    }
+
+    .breakingpointIntroAfbeelding {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        object-fit: contain;
+        border-radius: 24px;
+    }
+
+    .blendsIntroAfbeelding {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        border-radius: 24px;
+    }
+
+    /* Projectsecties */
+    .klemSectie {
+        margin-top: 60px;
+    }
+
+    .klemSectieTitel {
+        margin-bottom: 22px;
+        font-size: 34px;
+        line-height: 1.1;
+    }
+
+    .klemGroteAfbeelding,
+    .ins3,
+    .videoContainer {
+        width: 100%;
+        height: auto;
+        border-radius: 24px;
+    }
+
+    .klemWebsiteLink {
+        margin-top: 32px;
+    }
+
+    .klemWebsiteLink p {
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+
+    .klemWebsiteLink img {
+        width: 190px;
+    }
+
+    /* Meerdere afbeeldingen onder elkaar */
+    .breakingpointGame {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .breakingpointGame img,
+    .breaking3,
+    .breakingpoint4,
+    .ins3 {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Carrière Kameleon en Oertijdmuseum */
+    .carriereGrid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .carriereKolom,
+    .carriereKolomLinks,
+    .carriereKolomRechts {
+        gap: 24px;
+    }
+
+    .carriereFoto {
+        width: 100%;
+        height: auto;
+        aspect-ratio: auto;
+        object-fit: contain;
+        border-radius: 24px;
+    }
+
+    /* Video */
+    .videoContainer {
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+    }
+
+    .videoContainer iframe {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Slideshow */
+    .slideshowContainer {
+        width: 100%;
+        max-width: none;
+    }
+
+    .mySlides img {
+        width: 100%;
+        height: auto;
+        border-radius: 24px;
+    }
+
+    .prev,
+    .next {
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    /* More work-knop */
+    .buttonMoreWork {
+        width: 100%;
+        max-width: none;
+        margin: 50px 0 0;
+        justify-content: center;
+    }
+
+    .buttonMoreWork .button-view-my-work {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .witruimte {
+        height: 50px;
+    }
+
+    /* Lightbox */
+    .lightbox {
+        padding: 20px;
+    }
+
+    .lightbox-image {
+        max-width: 100%;
+        max-height: 85vh;
+    }
+
+    .lightbox-close {
+        top: 12px;
+        right: 18px;
+        font-size: 42px;
+    }
+
+    /* Aboutpagina */
+    .aboutMeFoto,
+    .aboutMeSection {
+        padding: 0 24px;
+    }
+
+    .aboutMeFoto2,
+    .aboutMeTekst {
+        width: 100%;
+    }
+
+    .cvSectie {
+        max-width: none;
+        margin: 60px 24px;
+    }
+}
+
+
+/* =========================
+   KLEINE TELEFOONS
+========================= */
+
+@media (max-width: 480px) {
+
+    .siteHeader {
+        min-height: 72px;
+        padding: 14px 20px;
+
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .logoLink {
+        font-size: 23px;
+    }
+
+    .nav {
+        width: 100%;
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+
+    .pagina {
+        margin: 0 20px;
+    }
+
+    /* Homepage */
+    .hero {
+        padding: 48px 20px;
+    }
+
+    .heroTitel {
+        font-size: 43px;
+    }
+
+    .heroTekst {
+        font-size: 15px;
+    }
+
+    h2 {
+        font-size: 38px;
+    }
+
+    h4,
+    .titelStijl {
+        font-size: 36px;
+    }
+
+    .projectKaart {
+        margin-right: 20px;
+        margin-left: 20px;
+        border-radius: 24px;
+    }
+
+    .projectAfbeelding {
+        height: 240px;
+    }
+
+    .projectTekst {
+        min-height: 260px;
+        padding: 32px 24px;
+    }
+
+    .projectTekst h3 {
+        font-size: 32px;
+    }
+
+    /* Projectpagina */
+    .klemTitel {
+        font-size: 36px;
+    }
+
+    .klemSectieTitel,
+    h5 {
+        font-size: 30px;
+    }
+
+    .klemIntroAfbeelding img,
+    .insIntroAfbeelding img,
+    .breakingpointIntroAfbeelding,
+    .blendsIntroAfbeelding,
+    .klemGroteAfbeelding,
+    .videoContainer,
+    .carriereFoto,
+    .mySlides img {
+        border-radius: 20px;
+    }
+
+    .buttonMoreWork .button-view-my-work {
+        height: 58px;
+        font-size: 19px;
+    }
+
+     .siteHeader {
+        padding: 14px 20px;
+    }
+
+    .nav {
+        padding-right: 20px;
+        padding-left: 20px;
     }
 }
