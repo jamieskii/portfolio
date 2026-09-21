@@ -1,128 +1,279 @@
-// Small interactions for the portfolio.
-// Navigation uses native smooth scrolling; this script adds a subtle
-// reveal effect as project cards enter the viewport.
-
-const cards = document.querySelectorAll(".project-card");
-
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-        observer.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.15 }
-);
-
-cards.forEach((card) => {
-  card.style.opacity = "0";
-  card.style.transform = "translateY(24px)";
-  card.style.transition = "opacity .6s ease, transform .6s ease";
-  observer.observe(card);
-});
+/* =====================================================
+   HAMBURGERMENU
+===================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".project-card").forEach((card) => {
-    card.addEventListener("transitionend", () => {
-      if (card.classList.contains("is-visible")) {
-        card.style.opacity = "1";
-        card.style.transform = "translateY(0)";
-      }
+    const menuToggle = document.querySelector(".menuToggle");
+    const navigation = document.querySelector("#mainNavigation");
+
+    function closeMenu() {
+        if (!menuToggle || !navigation) return;
+
+        navigation.classList.remove("is-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open menu");
+    }
+
+    if (menuToggle && navigation) {
+        menuToggle.addEventListener("click", () => {
+            const isOpen = navigation.classList.toggle("is-open");
+
+            menuToggle.setAttribute("aria-expanded", String(isOpen));
+            menuToggle.setAttribute(
+                "aria-label",
+                isOpen ? "Close menu" : "Open menu"
+            );
+        });
+
+        navigation.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", closeMenu);
+        });
+
+        window.addEventListener("resize", () => {
+            if (window.innerWidth > 800) {
+                closeMenu();
+            }
+        });
+    }
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeMenu();
+        }
     });
-  });
 });
 
-// Make the CSS transition work when IntersectionObserver adds the class.
-const style = document.createElement("style");
-style.textContent = ".project-card.is-visible { opacity: 1 !important; transform: translateY(0) !important; }";
-document.head.appendChild(style);
+
+/* =====================================================
+   PROJECTKAART-ANIMATIES
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+    /*
+       Je website gebruikt vooral .projectKaart.
+       .project-card blijft toegevoegd voor eventuele
+       andere pagina's waarop je die class gebruikt.
+    */
+
+    const cards = document.querySelectorAll(
+        ".projectKaart, .project-card"
+    );
+
+    if (cards.length === 0) return;
+
+    /*
+       Fallback voor browsers zonder IntersectionObserver:
+       de kaarten worden dan meteen zichtbaar.
+    */
+
+    if (!("IntersectionObserver" in window)) {
+        cards.forEach((card) => {
+            card.classList.add("is-visible");
+        });
+
+        return;
+    }
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        {
+            threshold: 0.15
+        }
+    );
+
+    cards.forEach((card) => {
+        observer.observe(card);
+    });
+});
 
 
+/* CSS voor de projectkaart-animatie */
+
+const animationStyle = document.createElement("style");
+
+animationStyle.textContent = `
+    .projectKaart,
+    .project-card {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+            opacity 0.6s ease,
+            transform 0.6s ease;
+    }
+
+    .projectKaart.is-visible,
+    .project-card.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .projectKaart,
+        .project-card {
+            opacity: 1;
+            transform: none;
+            transition: none;
+        }
+    }
+`;
+
+document.head.appendChild(animationStyle);
 
 
-
-//slideshow code//
+/* =====================================================
+   SLIDESHOW
+===================================================== */
 
 let slideIndex = 1;
-showSlides(slideIndex);
 
-// Next/previous controls
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
-
-// Thumbnail image controls
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
-  
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-
-  if (slides.length === 0) {
-    return;
-  }
-
-  let dots = document.getElementsByClassName("dot");
-  if (n > slides.length) { slideIndex = 1 }
-  if (n < 1) { slideIndex = slides.length }
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex - 1].style.display = "block";
-  dots[slideIndex - 1].className += " active";
-}
-
-
-
-
-//clickable images code//
-
-const clickableImages = document.querySelectorAll(".clickable-image");
-const lightbox = document.querySelector("#lightbox");
-const lightboxImage = document.querySelector("#lightboxImage");
-const lightboxClose = document.querySelector(".lightbox-close");
-
-function openLightbox(image) {
-    lightboxImage.src = image.src;
-    lightboxImage.alt = image.alt;
-    lightbox.classList.add("is-open");
-
-    document.body.style.overflow = "hidden";
-}
-
-function closeLightbox() {
-    lightbox.classList.remove("is-open");
-    lightboxImage.src = "";
-
-    document.body.style.overflow = "";
-}
-
-clickableImages.forEach((image) => {
-    image.addEventListener("click", () => {
-        openLightbox(image);
-    });
+document.addEventListener("DOMContentLoaded", () => {
+    showSlides(slideIndex);
 });
 
-lightboxClose.addEventListener("click", closeLightbox);
 
-/* Sluiten wanneer je naast de afbeelding klikt */
-lightbox.addEventListener("click", (event) => {
-    if (event.target === lightbox) {
-        closeLightbox();
+/* Volgende/vorige knop */
+
+function plusSlides(number) {
+    slideIndex += number;
+    showSlides(slideIndex);
+}
+
+
+/* Bolletjes onder de slideshow */
+
+function currentSlide(number) {
+    slideIndex = number;
+    showSlides(slideIndex);
+}
+
+
+function showSlides(number) {
+    const slides = document.getElementsByClassName("mySlides");
+    const dots = document.getElementsByClassName("dot");
+
+    /*
+       Stop wanneer deze pagina geen slideshow heeft.
+    */
+
+    if (slides.length === 0) return;
+
+    if (number > slides.length) {
+        slideIndex = 1;
     }
-});
 
-/* Sluiten met de Escape-toets */
-document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
-        closeLightbox();
+    if (number < 1) {
+        slideIndex = slides.length;
+    }
+
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+
+    for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.remove("active");
+    }
+
+    const activeSlide = slides[slideIndex - 1];
+
+    if (activeSlide) {
+        activeSlide.style.display = "block";
+    }
+
+    /*
+       Sommige pagina's hebben wel slides, maar geen dots.
+       Daarom controleren we eerst of de dot bestaat.
+    */
+
+    const activeDot = dots[slideIndex - 1];
+
+    if (activeDot) {
+        activeDot.classList.add("active");
+    }
+}
+
+
+/* =====================================================
+   CLICKABLE IMAGES / LIGHTBOX
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+    const clickableImages =
+        document.querySelectorAll(".clickable-image");
+
+    const lightbox =
+        document.querySelector("#lightbox");
+
+    const lightboxImage =
+        document.querySelector("#lightboxImage");
+
+    const lightboxClose =
+        document.querySelector(".lightbox-close");
+
+
+    function closeLightbox() {
+        /*
+           Stop als deze pagina geen lightbox bevat.
+        */
+
+        if (!lightbox || !lightboxImage) return;
+
+        lightbox.classList.remove("is-open");
+        lightboxImage.src = "";
+        lightboxImage.alt = "";
+
+        document.body.style.overflow = "";
+    }
+
+
+    /*
+       Voer de lightboxcode alleen uit als alle benodigde
+       onderdelen op de pagina aanwezig zijn.
+    */
+
+    if (
+        clickableImages.length > 0 &&
+        lightbox &&
+        lightboxImage &&
+        lightboxClose
+    ) {
+        clickableImages.forEach((image) => {
+            image.addEventListener("click", () => {
+                lightboxImage.src = image.currentSrc || image.src;
+                lightboxImage.alt = image.alt || "";
+
+                lightbox.classList.add("is-open");
+                document.body.style.overflow = "hidden";
+            });
+        });
+
+
+        /* Sluiten met het kruisje */
+
+        lightboxClose.addEventListener("click", closeLightbox);
+
+
+        /* Sluiten door naast de afbeelding te klikken */
+
+        lightbox.addEventListener("click", (event) => {
+            if (event.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+
+        /* Sluiten met de Escape-toets */
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                closeLightbox();
+            }
+        });
     }
 });
